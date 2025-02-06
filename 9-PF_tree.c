@@ -1,68 +1,67 @@
-//9-Evaluate postfix expression using trees
-
 #include <stdio.h>
-#include <conio.h>
-#include <math.h>
 #include <stdlib.h>
+#include <math.h>
 #include <ctype.h>
 
 struct node {
-    int data;
-    struct node *lchild;
-    struct node *rchild;
+    char data;  // Store as character since operands are variables
+    struct node *lchild, *rchild;
 };
 
 typedef struct node *NODE;
-NODE root = 0;
 
 NODE create_tree(char postfix[]);
 float eval(NODE root);
 
-void main() {
-    char postfix[20];
+int main() {
+    char postfix[50];  // Increased size for longer expressions
     float result;
-    printf("Enter the postfix\n");
+    
+    printf("Enter the postfix expression: ");
     scanf("%s", postfix);
-    root = create_tree(postfix);
+
+    NODE root = create_tree(postfix);
     result = eval(root);
+    
     printf("Result = %f\n", result);
-    getch();
+    
+    return 0;
 }
 
 NODE create_tree(char postfix[]) {
-    NODE temp, stack[20];
+    NODE stack[20];
     int i = 0, j = 0;
     char symbol;
-    for (i = 0; (symbol = postfix[i]) != 0; i++) {
-        temp = (NODE)malloc(sizeof(struct node));
-        temp->lchild = temp->rchild = 0;
+
+    for (i = 0; (symbol = postfix[i]) != '\0'; i++) {
+        NODE temp = (NODE)malloc(sizeof(struct node));
+        temp->lchild = temp->rchild = NULL;
         temp->data = symbol;
-        if (isalnum(symbol))
+
+        if (isalnum(symbol)) {  // If it's an operand (variable)
             stack[j++] = temp;
-        else {
+        } else {  // If it's an operator
             temp->rchild = stack[--j];
             temp->lchild = stack[--j];
             stack[j++] = temp;
         }
     }
-    return (stack[--j]);
+    return stack[--j];
 }
 
 float eval(NODE root) {
     float num;
+
     switch (root->data) {
         case '+': return eval(root->lchild) + eval(root->rchild);
         case '-': return eval(root->lchild) - eval(root->rchild);
-        case '/': return eval(root->lchild) / eval(root->rchild);
         case '*': return eval(root->lchild) * eval(root->rchild);
+        case '/': return eval(root->lchild) / eval(root->rchild);
         case '^': return pow(eval(root->lchild), eval(root->rchild));
         default:
-            if (isalpha(root->data)) {
-                printf("Enter the value of %c\n", root->data);
-                scanf("%f", &num);
-                return (num);
-            } else {
-                return (root->data - '0');
-            }
+            printf("Enter the value of %c: ", root->data);
+            scanf("%f", &num);
+            return num;  // Return the entered operand value
     }
 }
+

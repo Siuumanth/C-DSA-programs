@@ -93,7 +93,7 @@ NODE deletion(NODE root) {
     if(root == NULL) {
         printf("No elements in tree\n"); 
         return root; 
-    } 
+    }
 
     printf("Enter the element to be deleted: "); 
     scanf("%d", &item); 

@@ -84,7 +84,6 @@ NODE insert_front(NODE head)
  head->link=temp; 
  return head; 
 } 
-
 NODE delete_front(NODE head){
 
 } 

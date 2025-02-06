@@ -48,16 +48,16 @@ NODE getnode() {
 }
 
 void create(NODE root) {
-    if (is_lchild(root)) {
+    if(is_lchild(root)) {
         root->lchild = getnode();
-        printf("Enter the data: ");
-        scanf("%d", &root->lchild->data);
+        printf("Enter the data");
+        scanf("%d",&root->lchild->data);
         create(root->lchild);
     }
-    if (is_rchild(root)) {
+    if(is_rchild(root)){
         root->rchild = getnode();
-        printf("Enter the data: ");
-        scanf("%d", &root->rchild->data);
+        printf("Enter thr data");
+        scanf("%d",&root->rchild->data);
         create(root->rchild);
     }
 }

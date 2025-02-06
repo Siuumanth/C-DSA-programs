@@ -7,7 +7,7 @@ void main()
  int n; 
  printf("Enter the number of disks\n"); 
  scanf("%d",&n); 
- tower(n,'s','d','t'); 
+ tower(n,'src','dest','temp'); 
  getch(); 
 } 
 tower(int n,char source,char dest,char temp) 
